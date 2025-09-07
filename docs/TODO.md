@@ -114,14 +114,15 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Completed**: 2025-01-08
 
 #### Twitter Video Download
-- [ ] 🟡 **FEAT-P1-005**: Implement m3u8 segment downloader for Twitter videos
-  - **Acceptance Criteria**: 
-    - Downloads all video segments
-    - Concatenates segments in correct order
-    - Handles network failures with retry
-    - Progress tracking per segment
+- [x] 🟡 **FEAT-P1-005**: Implement m3u8 segment downloader for Twitter videos
+  - **Acceptance Criteria**: [Met ✓]
+    - Downloads all video segments ✓
+    - Concatenates segments in correct order ✓
+    - Handles network failures with retry ✓
+    - Progress tracking per segment ✓
   - **Dependencies**: FEAT-P1-004
-  - **Effort**: L
+  - **Effort**: L (Actual: L)
+  - **Completed**: 2025-01-08
 
 - [ ] 🟡 **FEAT-P1-006**: Create DownloadManager module with Chrome API integration
   - **Acceptance Criteria**: 
