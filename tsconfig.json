@@ -3,32 +3,56 @@
     "target": "ES2020",
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    /* Strict Type-Checking Options */
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    /* Source Map Options */
+    "sourceMap": true,
+    "inlineSources": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Other Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["chrome", "node"],
+    "types": ["chrome", "node", "webextension-polyfill"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "@background/*": ["src/background/*"],
       "@content/*": ["src/content/*"],
       "@utils/*": ["src/utils/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@types/*": ["src/types/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "public/**/*",
-    "manifest.json"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+  "include": ["src/**/*", "public/**/*", "scripts/**/*", "manifest.json", "*.config.js"],
+  "exclude": ["node_modules", "dist", "build", "coverage", "**/*.spec.ts", "**/*.test.ts"]
 }

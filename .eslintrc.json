@@ -8,31 +8,101 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    /* TypeScript Rules */
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "prettier/prettier": ["error", {
-      "semi": true,
-      "singleQuote": true,
-      "tabWidth": 2,
-      "trailingComma": "es5",
-      "printWidth": 100
-    }]
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/strict-boolean-expressions": "warn",
+
+    /* Chrome Extension Specific Rules */
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error",
+    "no-inner-declarations": "error",
+
+    /* Security Rules */
+    "no-alert": "error",
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+
+    /* Code Quality Rules */
+    "eqeqeq": ["error", "always"],
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "no-throw-literal": "error",
+    "no-param-reassign": ["error", { "props": true }],
+    "no-nested-ternary": "error",
+    "no-unneeded-ternary": "error",
+    "no-duplicate-imports": "error",
+    "no-useless-constructor": "error",
+    "no-useless-return": "error",
+    "require-await": "error",
+    "no-return-await": "error",
+
+    /* Prettier Integration */
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "printWidth": 100,
+        "endOfLine": "lf"
+      }
+    ]
   },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "extends": ["eslint:recommended"],
+      "rules": {
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+        "require-await": "off"
+      }
+    },
+    {
+      "files": ["scripts/**/*.js", "*.config.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["src/background/**/*.ts", "src/content/**/*.ts"],
+      "rules": {
+        /* Chrome Extension Context Specific */
+        "no-console": ["warn", { "allow": ["warn", "error", "info", "debug"] }]
+      }
+    }
+  ],
   "globals": {
     "chrome": "readonly"
   }

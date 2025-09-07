@@ -1,0 +1,29 @@
+# Build output
+dist/
+build/
+*.zip
+
+# Dependencies
+node_modules/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+
+# Documentation
+*.md
+
+# Chrome extension build artifacts
+*.pem
+*.crx

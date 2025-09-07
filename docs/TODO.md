@@ -34,13 +34,14 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: S (Actual: S)
   - **Completed**: 2025-01-07
 
-- [ ] 🔴 **INFRA-P1-003**: Configure TypeScript and ESLint for code quality
-  - **Acceptance Criteria**: 
-    - TypeScript configuration with strict mode
-    - ESLint rules for Chrome extension best practices
-    - Pre-commit hooks configured
+- [x] 🔴 **INFRA-P1-003**: Configure TypeScript and ESLint for code quality
+  - **Acceptance Criteria**: [Met ✓]
+    - TypeScript configuration with strict mode ✓
+    - ESLint rules for Chrome extension best practices ✓
+    - Pre-commit hooks configured ✓
   - **Dependencies**: INFRA-P1-001
-  - **Effort**: S
+  - **Effort**: S (Actual: M)
+  - **Completed**: 2025-01-07
 
 - [ ] 🟡 **INFRA-P1-004**: Set up GitHub repository with CI/CD pipeline
   - **Acceptance Criteria**: 
