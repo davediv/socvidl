@@ -103,14 +103,15 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: L (Actual: L)
   - **Completed**: 2025-01-07
 
-- [ ] 🔴 **FEAT-P1-004**: Create VideoExtractor module for Twitter videos
-  - **Acceptance Criteria**: 
-    - `getVideoSource()` extracts video URLs
-    - `parseM3U8()` parses playlist files
-    - `findHighestQuality()` selects best variant
-    - Handles multiple quality options
+- [x] 🔴 **FEAT-P1-004**: Create VideoExtractor module for Twitter videos
+  - **Acceptance Criteria**: [Met ✓]
+    - `getVideoSource()` extracts video URLs ✓
+    - `parseM3U8()` parses playlist files ✓
+    - `findHighestQuality()` selects best variant ✓
+    - Handles multiple quality options ✓
   - **Dependencies**: API-P1-001
-  - **Effort**: L
+  - **Effort**: L (Actual: L)
+  - **Completed**: 2025-01-08
 
 #### Twitter Video Download
 - [ ] 🟡 **FEAT-P1-005**: Implement m3u8 segment downloader for Twitter videos
