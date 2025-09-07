@@ -43,7 +43,7 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: S (Actual: M)
   - **Completed**: 2025-01-07
 
-- [ ] 🟡 **INFRA-P1-004**: Set up GitHub repository with CI/CD pipeline
+- [x] 🟡 **INFRA-P1-004**: Set up GitHub repository with CI/CD pipeline
   - **Acceptance Criteria**: 
     - GitHub Actions for automated testing
     - Build verification on PR
@@ -52,32 +52,35 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: M
 
 #### Core Module Setup
-- [ ] 🔴 **FEAT-P1-001**: Implement VideoDetector module for finding video elements
-  - **Acceptance Criteria**: 
-    - `detectVideos()` function identifies video tags
-    - `observeMutations()` monitors DOM changes
-    - `isVideoElement()` validates video elements
-    - Works with dynamic content loading
+- [x] 🔴 **FEAT-P1-001**: Implement VideoDetector module for finding video elements
+  - **Acceptance Criteria**: [Met ✓]
+    - `detectVideos()` function identifies video tags ✓
+    - `observeMutations()` monitors DOM changes ✓
+    - `isVideoElement()` validates video elements ✓
+    - Works with dynamic content loading ✓
   - **Dependencies**: INFRA-P1-002
-  - **Effort**: M
+  - **Effort**: M (Actual: M)
+  - **Completed**: 2025-01-07
 
-- [ ] 🔴 **FEAT-P1-002**: Create ButtonInjector module for adding download buttons
-  - **Acceptance Criteria**: 
-    - `injectButton()` adds button to DOM
-    - `positionButton()` places button correctly
-    - `preventDuplicates()` avoids multiple buttons
-    - Button styled to match platform
+- [x] 🔴 **FEAT-P1-002**: Create ButtonInjector module for adding download buttons
+  - **Acceptance Criteria**: [Met ✓]
+    - `injectButton()` adds button to DOM ✓
+    - `positionButton()` places button correctly ✓
+    - `preventDuplicates()` avoids multiple buttons ✓
+    - Button styled to match platform ✓
   - **Dependencies**: INFRA-P1-002, UI-P1-001
-  - **Effort**: M
+  - **Effort**: M (Actual: M)
+  - **Completed**: 2025-01-07
 
-- [ ] 🟡 **UI-P1-001**: Design and implement download button component styles
-  - **Acceptance Criteria**: 
-    - Responsive button design
-    - Hover and active states
-    - Loading state animation
-    - Success/error visual feedback
+- [x] 🟡 **UI-P1-001**: Design and implement download button component styles
+  - **Acceptance Criteria**: [Met ✓]
+    - Responsive button design ✓
+    - Hover and active states ✓
+    - Loading state animation ✓
+    - Success/error visual feedback ✓
   - **Dependencies**: INFRA-P1-002
-  - **Effort**: S
+  - **Effort**: S (Actual: S)
+  - **Completed**: 2025-01-07
 
 ### Week 2: Twitter/X Implementation
 
