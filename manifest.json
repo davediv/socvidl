@@ -6,29 +6,35 @@
   "description": "Download videos from Twitter/X and Reddit with a single click",
   "author": "SocviDL Team",
   "homepage_url": "https://github.com/yourusername/socvidl",
-  
+
   "permissions": [
     "downloads",
     "storage",
     "webRequest",
+    "webRequestBlocking",
     "declarativeNetRequest"
   ],
-  
+
   "host_permissions": [
     "*://twitter.com/*",
     "*://x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.x.com/*",
+    "*://*.twimg.com/*",
+    "*://video.twimg.com/*",
+    "*://abs.twimg.com/*",
     "*://reddit.com/*",
     "*://www.reddit.com/*",
     "*://old.reddit.com/*",
     "*://*.redd.it/*",
     "*://v.redd.it/*"
   ],
-  
+
   "background": {
     "service_worker": "src/background/background.js",
     "type": "module"
   },
-  
+
   "content_scripts": [
     {
       "matches": [
@@ -43,7 +49,7 @@
       "run_at": "document_idle"
     }
   ],
-  
+
   "action": {
     "default_popup": "public/popup.html",
     "default_icon": {
@@ -53,13 +59,13 @@
     },
     "default_title": "SocviDL - Video Downloader"
   },
-  
+
   "icons": {
     "16": "assets/icons/icon-16.png",
     "48": "assets/icons/icon-48.png",
     "128": "assets/icons/icon-128.png"
   },
-  
+
   "web_accessible_resources": [
     {
       "resources": ["assets/*", "src/lib/*"],
@@ -72,7 +78,7 @@
       ]
     }
   ],
-  
+
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   }
