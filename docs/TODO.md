@@ -124,23 +124,25 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: L (Actual: L)
   - **Completed**: 2025-01-08
 
-- [ ] 🟡 **FEAT-P1-006**: Create DownloadManager module with Chrome API integration
-  - **Acceptance Criteria**: 
-    - `initiateDownload()` triggers Chrome download
-    - `generateFilename()` creates descriptive names
-    - Format: `twitter_username_timestamp.mp4`
-    - Sanitizes filenames for filesystem
+- [x] 🟡 **FEAT-P1-006**: Create DownloadManager module with Chrome API integration
+  - **Acceptance Criteria**: [Met ✓]
+    - `initiateDownload()` triggers Chrome download ✓
+    - `generateFilename()` creates descriptive names ✓
+    - Format: `twitter_username_timestamp.mp4` ✓
+    - Sanitizes filenames for filesystem ✓
   - **Dependencies**: FEAT-P1-005
-  - **Effort**: M
+  - **Effort**: M (Actual: M)
+  - **Completed**: 2025-01-08
 
-- [ ] 🟡 **UI-P1-002**: Implement download progress feedback for Twitter videos
-  - **Acceptance Criteria**: 
-    - Visual loading state on button
-    - Success checkmark animation
-    - Error state with retry option
-    - Integration with Chrome download bar
+- [x] 🟡 **UI-P1-002**: Implement download progress feedback for Twitter videos
+  - **Acceptance Criteria**: [Met ✓]
+    - Visual loading state on button ✓
+    - Success checkmark animation ✓
+    - Error state with retry option ✓
+    - Integration with Chrome download bar ✓
   - **Dependencies**: FEAT-P1-006, UI-P1-001
-  - **Effort**: S
+  - **Effort**: S (Actual: M)
+  - **Completed**: 2025-01-08
 
 ### Week 3: Reddit Implementation
 
