@@ -54,5 +54,5 @@
     }
   },
   "include": ["src/**/*", "public/**/*", "scripts/**/*", "manifest.json", "*.config.js"],
-  "exclude": ["node_modules", "dist", "build", "coverage", "**/*.spec.ts", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "build", "coverage"]
 }
