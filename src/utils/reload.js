@@ -32,7 +32,7 @@ function connectWebSocket() {
       clearTimeout(reconnectTimer);
     };
 
-    ws.onmessage = (event) => {
+    ws.onmessage = event => {
       const message = JSON.parse(event.data);
       handleReloadMessage(message);
     };
@@ -43,7 +43,7 @@ function connectWebSocket() {
       scheduleReconnect();
     };
 
-    ws.onerror = (error) => {
+    ws.onerror = error => {
       console.error('[SocviDL] Hot reload error:', error);
       ws = null;
     };
@@ -74,23 +74,23 @@ function handleReloadMessage(message) {
       console.log('[SocviDL] Reloading extension...');
       chrome.runtime.reload();
       break;
-    
+
     case 'reload-tab':
       console.log('[SocviDL] Reloading current tab...');
       window.location.reload();
       break;
-    
+
     case 'reload-content':
       console.log('[SocviDL] Reloading content scripts...');
       // Content scripts will be reloaded when the tab refreshes
       window.location.reload();
       break;
-    
+
     case 'update-css':
       console.log('[SocviDL] Updating styles...');
       updateStyles();
       break;
-    
+
     default:
       console.log('[SocviDL] Unknown reload message:', message);
   }

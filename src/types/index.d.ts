@@ -3,7 +3,7 @@
  */
 
 // Platform types
-export type Platform = 'twitter' | 'reddit' | null;
+export type Platform = 'twitter' | 'x' | 'reddit' | null;
 
 // Video data structure
 export interface VideoData {
@@ -105,4 +105,27 @@ export interface ReloadMessage {
   type: 'reload-extension' | 'reload-tab' | 'reload-content' | 'update-css' | 'connected';
   timestamp: number;
   file?: string;
+}
+
+// Video detection types
+export interface VideoElement extends HTMLVideoElement {
+  dataset: DOMStringMap;
+}
+
+export interface VideoMetadata {
+  duration: number | null;
+  width: number | null;
+  height: number | null;
+  poster: string | null;
+  hasAudio: boolean;
+  isLive: boolean;
+}
+
+export interface DetectedVideo {
+  id: string;
+  element: VideoElement;
+  url: string | null;
+  platform: Platform;
+  container: HTMLElement | null;
+  metadata: VideoMetadata;
 }
