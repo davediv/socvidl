@@ -45,15 +45,15 @@
 }
 
 /* Twitter Dark Mode */
-body[data-theme="dark"] .platform-twitter .socvidl-download-btn,
-body[data-theme="dark"] .platform-x .socvidl-download-btn,
+body[data-theme='dark'] .platform-twitter .socvidl-download-btn,
+body[data-theme='dark'] .platform-x .socvidl-download-btn,
 .platform-twitter .socvidl-download-btn.dark-mode,
 .platform-x .socvidl-download-btn.dark-mode {
   color: rgb(139, 152, 165);
 }
 
-body[data-theme="dark"] .platform-twitter .socvidl-download-btn:hover,
-body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
+body[data-theme='dark'] .platform-twitter .socvidl-download-btn:hover,
+body[data-theme='dark'] .platform-x .socvidl-download-btn:hover,
 .platform-twitter .socvidl-download-btn.dark-mode:hover,
 .platform-x .socvidl-download-btn.dark-mode:hover {
   background-color: rgba(29, 155, 240, 0.1);
@@ -148,7 +148,8 @@ body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
 }
 
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   25% {
@@ -168,6 +169,23 @@ body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
   background-color: currentColor;
   transition: width 0.3s ease;
   opacity: 0.5;
+  border-radius: 0 0 9999px 9999px;
+  z-index: 1;
+}
+
+/* Smooth progress animation */
+.socvidl-download-btn.loading .progress-bar {
+  animation: progress-pulse 1s ease-in-out infinite;
+}
+
+@keyframes progress-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* Disabled state */
@@ -190,16 +208,16 @@ body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
     padding: 6px 10px;
     font-size: 13px;
   }
-  
+
   .socvidl-download-btn svg {
     width: 16px;
     height: 16px;
   }
-  
+
   .socvidl-download-btn span {
     display: none; /* Hide text on mobile, show icon only */
   }
-  
+
   .socvidl-download-btn.show-text span {
     display: inline; /* Allow override to show text */
   }
@@ -231,6 +249,44 @@ body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
 
 .socvidl-download-btn.icon-only span {
   display: none;
+}
+
+/* Percentage display during download */
+.socvidl-download-btn.downloading span.percentage {
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Retry state */
+.socvidl-download-btn.retry {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Download complete flash */
+.socvidl-download-btn.flash {
+  animation: flash 0.3s ease;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(34, 197, 94, 0.2);
+  }
 }
 
 /* Button group support */
