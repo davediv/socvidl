@@ -1,0 +1,254 @@
+/* SocviDL Download Button Styles */
+
+/* Base button styles */
+.socvidl-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.socvidl-download-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Platform-specific styles */
+
+/* Twitter/X styles */
+.platform-twitter .socvidl-download-btn,
+.platform-x .socvidl-download-btn {
+  background-color: transparent;
+  color: rgb(83, 100, 113);
+}
+
+.platform-twitter .socvidl-download-btn:hover,
+.platform-x .socvidl-download-btn:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+  color: rgb(29, 155, 240);
+}
+
+.platform-twitter .socvidl-download-btn:active,
+.platform-x .socvidl-download-btn:active {
+  background-color: rgba(29, 155, 240, 0.2);
+}
+
+/* Twitter Dark Mode */
+body[data-theme="dark"] .platform-twitter .socvidl-download-btn,
+body[data-theme="dark"] .platform-x .socvidl-download-btn,
+.platform-twitter .socvidl-download-btn.dark-mode,
+.platform-x .socvidl-download-btn.dark-mode {
+  color: rgb(139, 152, 165);
+}
+
+body[data-theme="dark"] .platform-twitter .socvidl-download-btn:hover,
+body[data-theme="dark"] .platform-x .socvidl-download-btn:hover,
+.platform-twitter .socvidl-download-btn.dark-mode:hover,
+.platform-x .socvidl-download-btn.dark-mode:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+  color: rgb(29, 155, 240);
+}
+
+/* Reddit styles */
+.platform-reddit .socvidl-download-btn {
+  background-color: transparent;
+  color: #878a8c;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+.platform-reddit .socvidl-download-btn:hover {
+  background-color: rgba(26, 26, 27, 0.1);
+  color: #1a1a1b;
+}
+
+.platform-reddit .socvidl-download-btn:active {
+  background-color: rgba(26, 26, 27, 0.2);
+}
+
+/* Reddit Dark Mode */
+.platform-reddit.theme-dark .socvidl-download-btn,
+.platform-reddit .socvidl-download-btn.dark-mode {
+  color: #818384;
+}
+
+.platform-reddit.theme-dark .socvidl-download-btn:hover,
+.platform-reddit .socvidl-download-btn.dark-mode:hover {
+  background-color: rgba(215, 218, 220, 0.1);
+  color: #d7dadc;
+}
+
+/* Loading state */
+.socvidl-download-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.socvidl-download-btn.loading svg {
+  animation: spin 1s linear infinite;
+}
+
+.socvidl-download-btn.loading span {
+  color: inherit;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Success state */
+.socvidl-download-btn.success {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+  color: rgb(34, 197, 94) !important;
+}
+
+.socvidl-download-btn.success svg {
+  animation: checkmark 0.4s ease;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Error state */
+.socvidl-download-btn.error {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  color: rgb(239, 68, 68) !important;
+}
+
+.socvidl-download-btn.error svg {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* Progress bar for loading state */
+.socvidl-download-btn .progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+  opacity: 0.5;
+}
+
+/* Disabled state */
+.socvidl-download-btn:disabled,
+.socvidl-download-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Focus styles for accessibility */
+.socvidl-download-btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .socvidl-download-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .socvidl-download-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .socvidl-download-btn span {
+    display: none; /* Hide text on mobile, show icon only */
+  }
+  
+  .socvidl-download-btn.show-text span {
+    display: inline; /* Allow override to show text */
+  }
+}
+
+/* Tooltip for mobile */
+.socvidl-download-btn[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-bottom: 4px;
+  z-index: 10000;
+}
+
+/* Icon variations */
+.socvidl-download-btn.icon-only {
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.socvidl-download-btn.icon-only span {
+  display: none;
+}
+
+/* Button group support */
+.socvidl-button-group {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.socvidl-button-group .socvidl-download-btn {
+  border-radius: 0;
+}
+
+.socvidl-button-group .socvidl-download-btn:first-child {
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+}
+
+.socvidl-button-group .socvidl-download-btn:last-child {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+}
