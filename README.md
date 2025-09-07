@@ -1,0 +1,2 @@
+# SocviDL
+SocviDL is a lightweight Chrome extension that enables users to download videos from Twitter/X and Reddit with a single click. The extension automatically detects videos on these platforms and injects a download button for seamless video saving.

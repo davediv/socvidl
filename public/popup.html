@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocviDL - Video Downloader</title>
+  <style>
+    body {
+      width: 320px;
+      padding: 16px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .tagline {
+      margin: 8px 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .status {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.9);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    
+    .footer {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .platforms {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    
+    .platform {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      font-size: 12px;
+    }
+    
+    .platform-icon {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>SocviDL</h1>
+    <p class="tagline">Download videos with a single click</p>
+  </div>
+  
+  <div class="status">
+    <span class="status-badge">Active</span>
+  </div>
+  
+  <div class="platforms">
+    <div class="platform">
+      <span class="platform-icon">🐦</span>
+      <span>Twitter/X</span>
+    </div>
+    <div class="platform">
+      <span class="platform-icon">👽</span>
+      <span>Reddit</span>
+    </div>
+  </div>
+  
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-value" id="todayCount">0</span>
+      <span class="stat-label">Today</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="totalCount">0</span>
+      <span class="stat-label">Total</span>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>Version 1.0.0</p>
+    <p><a href="https://github.com/yourusername/socvidl" target="_blank">GitHub</a> | <a href="#" id="settingsLink">Settings</a></p>
+  </div>
+  
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

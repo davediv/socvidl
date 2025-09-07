@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "SocviDL - Video Downloader for Twitter & Reddit",
+  "short_name": "SocviDL",
+  "version": "1.0.0",
+  "description": "Download videos from Twitter/X and Reddit with a single click",
+  "author": "SocviDL Team",
+  "homepage_url": "https://github.com/yourusername/socvidl",
+  
+  "permissions": [
+    "downloads",
+    "storage",
+    "webRequest",
+    "declarativeNetRequest"
+  ],
+  
+  "host_permissions": [
+    "*://twitter.com/*",
+    "*://x.com/*",
+    "*://reddit.com/*",
+    "*://www.reddit.com/*",
+    "*://old.reddit.com/*",
+    "*://*.redd.it/*",
+    "*://v.redd.it/*"
+  ],
+  
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://reddit.com/*",
+        "*://www.reddit.com/*",
+        "*://old.reddit.com/*"
+      ],
+      "js": ["src/content/content.js"],
+      "css": ["src/content/styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "public/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    },
+    "default_title": "SocviDL - Video Downloader"
+  },
+  
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "src/lib/*"],
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://reddit.com/*",
+        "*://www.reddit.com/*",
+        "*://old.reddit.com/*"
+      ]
+    }
+  ],
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

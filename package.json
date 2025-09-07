@@ -1,0 +1,66 @@
+{
+  "name": "socvidl",
+  "version": "1.0.0",
+  "description": "SocviDL - Video Downloader Chrome Extension for Twitter/X and Reddit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "node scripts/dev-server.js",
+    "dev:all": "npm run dev & npm run dev:server",
+    "build": "vite build",
+    "preview": "vite preview",
+    "watch": "vite build --watch",
+    "watch:reload": "npm run watch & npm run dev:server",
+    "lint": "eslint . --ext js,ts --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,ts --fix",
+    "format": "prettier --write \"src/**/*.{js,ts,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{js,ts,css,html}\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "zip": "npm run build && cd dist && zip -r ../socvidl-$npm_package_version.zip *",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "chrome-extension",
+    "video-downloader",
+    "twitter",
+    "reddit",
+    "x",
+    "manifest-v3"
+  ],
+  "author": "SocviDL Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/socvidl.git"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.2.0",
+    "@types/chrome": "^0.0.254",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitejs/plugin-legacy": "^5.2.0",
+    "@vitest/ui": "^1.1.0",
+    "chokidar": "^4.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-web-extension": "^4.0.0",
+    "vitest": "^1.1.0",
+    "ws": "^8.18.3"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
