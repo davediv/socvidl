@@ -94,13 +94,14 @@ This TODO list translates the Video Downloader Chrome Extension PRD into 87 acti
   - **Effort**: M (Actual: M)
   - **Completed**: 2025-01-07
 
-- [ ] 🔴 **API-P1-001**: Implement network request interception for m3u8 playlists
-  - **Acceptance Criteria**: 
-    - Intercepts m3u8 playlist requests
-    - Captures video manifest URLs
-    - Handles authentication tokens
+- [x] 🔴 **API-P1-001**: Implement network request interception for m3u8 playlists
+  - **Acceptance Criteria**: [Met ✓]
+    - Intercepts m3u8 playlist requests ✓
+    - Captures video manifest URLs ✓
+    - Handles authentication tokens ✓
   - **Dependencies**: INFRA-P1-003
-  - **Effort**: L
+  - **Effort**: L (Actual: L)
+  - **Completed**: 2025-01-07
 
 - [ ] 🔴 **FEAT-P1-004**: Create VideoExtractor module for Twitter videos
   - **Acceptance Criteria**: 
