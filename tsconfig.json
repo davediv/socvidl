@@ -42,7 +42,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "types": ["chrome", "node", "webextension-polyfill"],
+    "types": ["chrome", "node", "webextension-polyfill", "jest"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
