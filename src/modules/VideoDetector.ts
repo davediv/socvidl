@@ -42,7 +42,7 @@ export class VideoDetector {
     const videoElements = document.querySelectorAll<VideoElement>(selector);
     const detectedVideos: DetectedVideo[] = [];
 
-    videoElements.forEach((video) => {
+    videoElements.forEach(video => {
       if (!this.isVideoProcessed(video) && this.isVideoElement(video)) {
         const detectedVideo = this.processVideo(video);
         if (detectedVideo) {
@@ -64,7 +64,7 @@ export class VideoDetector {
       return;
     }
 
-    this.observer = new MutationObserver((mutations) => {
+    this.observer = new MutationObserver(mutations => {
       this.handleMutations(mutations);
     });
 
@@ -105,11 +105,12 @@ export class VideoDetector {
 
     // Check if video has a source
     const hasSource = !!(element.src || element.querySelector('source')?.src);
-    
+
     // Check if it's not a preview/thumbnail
-    const isNotThumbnail = !element.classList.contains('thumbnail') &&
-                          !element.classList.contains('preview') &&
-                          !element.hasAttribute('data-thumbnail');
+    const isNotThumbnail =
+      !element.classList.contains('thumbnail') &&
+      !element.classList.contains('preview') &&
+      !element.hasAttribute('data-thumbnail');
 
     // Platform-specific checks
     const platformValid = this.isPlatformSpecificVideo(element);
@@ -181,14 +182,15 @@ export class VideoDetector {
         const isGif = tweet?.querySelector('[aria-label*="GIF"]') !== null;
         const isExternalEmbed = video.src.includes('youtube') || video.src.includes('vimeo');
         return !isGif && !isExternalEmbed;
-      
+
       case 'reddit':
         // Only include Reddit-hosted videos
-        const isRedditVideo = video.src.includes('v.redd.it') || 
-                              video.src.includes('reddit.com') ||
-                              video.hasAttribute('data-hls-url');
+        const isRedditVideo =
+          video.src.includes('v.redd.it') ||
+          video.src.includes('reddit.com') ||
+          video.hasAttribute('data-hls-url');
         return isRedditVideo;
-      
+
       default:
         return true;
     }
@@ -229,7 +231,7 @@ export class VideoDetector {
 
       this.detectedVideos.set(id, detectedVideo);
       this.notifyCallbacks(detectedVideo);
-      
+
       return detectedVideo;
     } catch (error) {
       this.log(`Error processing video: ${error}`, 'error');
@@ -267,10 +269,10 @@ export class VideoDetector {
     switch (this.platform) {
       case 'twitter':
         return video.closest('article, [data-testid="tweet"]') as HTMLElement;
-      
+
       case 'reddit':
         return video.closest('shreddit-post, .Post, [data-test-id="post-content"]') as HTMLElement;
-      
+
       default:
         return video.parentElement;
     }
@@ -298,7 +300,7 @@ export class VideoDetector {
     if ('audioTracks' in video) {
       return (video as any).audioTracks?.length > 0;
     }
-    
+
     // Platform-specific checks
     if (this.platform === 'reddit') {
       // Reddit videos often have separate audio
@@ -323,7 +325,7 @@ export class VideoDetector {
 
       for (const mutation of mutations) {
         if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
+          mutation.addedNodes.forEach(node => {
             if (node.nodeType === Node.ELEMENT_NODE) {
               const element = node as Element;
               if (element.tagName === 'VIDEO' && this.isVideoElement(element)) {
@@ -346,7 +348,7 @@ export class VideoDetector {
    * Notify callbacks of detected video
    */
   private notifyCallbacks(video: DetectedVideo): void {
-    this.videoCallbacks.forEach((callback) => {
+    this.videoCallbacks.forEach(callback => {
       try {
         callback(video);
       } catch (error) {

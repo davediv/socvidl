@@ -11,7 +11,7 @@ describe('VideoExtractor', () => {
     extractor = new VideoExtractor({
       platform: 'twitter',
       preferredQuality: 'highest',
-      enableLogging: false
+      enableLogging: false,
     });
   });
 
@@ -26,7 +26,7 @@ describe('VideoExtractor', () => {
         platform: 'reddit',
         preferredQuality: 'lowest',
         maxBitrate: 1000000,
-        enableLogging: true
+        enableLogging: true,
       });
       expect(customExtractor).toBeDefined();
     });
@@ -53,7 +53,7 @@ describe('VideoExtractor', () => {
         resolution: { width: 1920, height: 1080 },
         codecs: 'avc1.42e01e,mp4a.40.2',
         programId: undefined,
-        framerate: undefined
+        framerate: undefined,
       });
       expect(playlist.variants[1].resolution).toEqual({ width: 1280, height: 720 });
       expect(playlist.variants[2].resolution).toEqual({ width: 640, height: 360 });
@@ -83,7 +83,7 @@ segment2.ts
         duration: 9.9,
         title: undefined,
         sequence: 0,
-        discontinuity: undefined
+        discontinuity: undefined,
       });
       expect(playlist.isLive).toBe(false);
     });
@@ -133,23 +133,23 @@ segment1.ts`;
       {
         url: '1080p.m3u8',
         bandwidth: 2000000,
-        resolution: { width: 1920, height: 1080 }
+        resolution: { width: 1920, height: 1080 },
       },
       {
         url: '720p.m3u8',
         bandwidth: 1000000,
-        resolution: { width: 1280, height: 720 }
+        resolution: { width: 1280, height: 720 },
       },
       {
         url: '360p.m3u8',
         bandwidth: 500000,
-        resolution: { width: 640, height: 360 }
-      }
+        resolution: { width: 640, height: 360 },
+      },
     ];
 
     it('should find highest quality variant', () => {
       const best = extractor.findHighestQuality(variants);
-      
+
       expect(best).toBeDefined();
       expect(best?.resolution?.height).toBe(1080);
       expect(best?.bandwidth).toBe(2000000);
@@ -158,11 +158,11 @@ segment1.ts`;
     it('should find lowest quality when preferred', () => {
       const lowQualityExtractor = new VideoExtractor({
         platform: 'twitter',
-        preferredQuality: 'lowest'
+        preferredQuality: 'lowest',
       });
-      
+
       const lowest = lowQualityExtractor.findHighestQuality(variants);
-      
+
       expect(lowest).toBeDefined();
       expect(lowest?.resolution?.height).toBe(360);
     });
@@ -170,11 +170,11 @@ segment1.ts`;
     it('should find medium quality when auto', () => {
       const autoExtractor = new VideoExtractor({
         platform: 'twitter',
-        preferredQuality: 'auto'
+        preferredQuality: 'auto',
       });
-      
+
       const medium = autoExtractor.findHighestQuality(variants);
-      
+
       expect(medium).toBeDefined();
       expect(medium?.resolution?.height).toBe(720);
     });
@@ -183,11 +183,11 @@ segment1.ts`;
       const limitedExtractor = new VideoExtractor({
         platform: 'twitter',
         preferredQuality: 'highest',
-        maxBitrate: 1500000
+        maxBitrate: 1500000,
       });
-      
+
       const limited = limitedExtractor.findHighestQuality(variants);
-      
+
       expect(limited).toBeDefined();
       expect(limited?.bandwidth).toBeLessThanOrEqual(1500000);
       expect(limited?.resolution?.height).toBe(720);
@@ -201,11 +201,11 @@ segment1.ts`;
     it('should handle variants without resolution', () => {
       const variantsNoRes: M3U8Variant[] = [
         { url: 'high.m3u8', bandwidth: 2000000 },
-        { url: 'low.m3u8', bandwidth: 500000 }
+        { url: 'low.m3u8', bandwidth: 500000 },
       ];
-      
+
       const best = extractor.findHighestQuality(variantsNoRes);
-      
+
       expect(best).toBeDefined();
       expect(best?.bandwidth).toBe(2000000);
     });
@@ -217,20 +217,20 @@ segment1.ts`;
         {
           url: '360p.m3u8',
           bandwidth: 500000,
-          resolution: { width: 640, height: 360 }
+          resolution: { width: 640, height: 360 },
         },
         {
           url: '1080p.m3u8',
           bandwidth: 2000000,
           resolution: { width: 1920, height: 1080 },
-          codecs: 'avc1.42e01e'
+          codecs: 'avc1.42e01e',
         },
         {
           url: '720p.m3u8',
           bandwidth: 1000000,
           resolution: { width: 1280, height: 720 },
-          framerate: 30
-        }
+          framerate: 30,
+        },
       ];
 
       const qualities = extractor.getAllQualities(variants);
@@ -248,18 +248,18 @@ segment1.ts`;
         {
           url: '4k.m3u8',
           bandwidth: 8000000,
-          resolution: { width: 3840, height: 2160 }
+          resolution: { width: 3840, height: 2160 },
         },
         {
           url: '1440p.m3u8',
           bandwidth: 4000000,
-          resolution: { width: 2560, height: 1440 }
+          resolution: { width: 2560, height: 1440 },
         },
         {
           url: '144p.m3u8',
           bandwidth: 100000,
-          resolution: { width: 256, height: 144 }
-        }
+          resolution: { width: 256, height: 144 },
+        },
       ];
 
       const qualities = extractor.getAllQualities(variants);
@@ -273,13 +273,13 @@ segment1.ts`;
   describe('getVideoSource', () => {
     it('should return direct video for mp4 URL', async () => {
       const url = 'https://example.com/video.mp4';
-      
+
       const source = await extractor.getVideoSource(url);
-      
+
       expect(source).toEqual({
         url,
         type: 'direct',
-        headers: undefined
+        headers: undefined,
       });
     });
 
@@ -300,11 +300,11 @@ segment0.ts
       (fetch as jest.Mock)
         .mockResolvedValueOnce({
           ok: true,
-          text: async () => masterContent
+          text: async () => masterContent,
         })
         .mockResolvedValueOnce({
           ok: true,
-          text: async () => mediaContent
+          text: async () => mediaContent,
         });
 
       const source = await extractor.getVideoSource(url);
@@ -325,7 +325,7 @@ segment0.ts
 
       (fetch as jest.Mock).mockResolvedValue({
         ok: true,
-        text: async () => mediaContent
+        text: async () => mediaContent,
       });
 
       const source = await extractor.getVideoSource(url);
@@ -333,27 +333,27 @@ segment0.ts
       expect(source).toEqual({
         url,
         type: 'm3u8',
-        headers: undefined
+        headers: undefined,
       });
     });
 
     it('should pass headers when fetching', async () => {
       const url = 'https://example.com/playlist.m3u8';
       const headers = {
-        'Authorization': 'Bearer token123',
-        'X-Custom': 'value'
+        Authorization: 'Bearer token123',
+        'X-Custom': 'value',
       };
 
       (fetch as jest.Mock).mockResolvedValue({
         ok: true,
-        text: async () => '#EXTM3U\n#EXTINF:10,\nsegment.ts'
+        text: async () => '#EXTM3U\n#EXTINF:10,\nsegment.ts',
       });
 
       await extractor.getVideoSource(url, headers);
 
       expect(fetch).toHaveBeenCalledWith(url, {
         headers,
-        credentials: 'omit'
+        credentials: 'omit',
       });
     });
 
@@ -372,7 +372,7 @@ segment0.ts
 
       (fetch as jest.Mock).mockResolvedValue({
         ok: false,
-        status: 404
+        status: 404,
       });
 
       const source = await extractor.getVideoSource(url);
@@ -382,17 +382,17 @@ segment0.ts
 
     it('should return null for unsupported formats', async () => {
       const url = 'https://example.com/video.unknown';
-      
+
       const source = await extractor.getVideoSource(url);
-      
+
       expect(source).toBeNull();
     });
 
     it('should detect DASH but not support it yet', async () => {
       const url = 'https://example.com/manifest.mpd';
-      
+
       const source = await extractor.getVideoSource(url);
-      
+
       expect(source).toBeNull();
     });
   });

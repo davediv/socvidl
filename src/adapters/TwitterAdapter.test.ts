@@ -9,7 +9,7 @@ describe('TwitterAdapter', () => {
   beforeEach(() => {
     // Reset DOM
     document.body.innerHTML = '';
-    
+
     // Create adapter instance
     adapter = new TwitterAdapter();
 
@@ -87,7 +87,7 @@ describe('TwitterAdapter', () => {
       const gifLabel = document.createElement('div');
       gifLabel.setAttribute('aria-label', 'Embedded GIF');
       container.appendChild(gifLabel);
-      
+
       expect(adapter.isValidVideo(mockVideo)).toBe(false);
     });
 
@@ -100,7 +100,7 @@ describe('TwitterAdapter', () => {
       const promotedLabel = document.createElement('div');
       promotedLabel.setAttribute('data-testid', 'promotedLabel');
       container.appendChild(promotedLabel);
-      
+
       expect(adapter.isValidVideo(mockVideo)).toBe(false);
     });
   });
@@ -118,7 +118,7 @@ describe('TwitterAdapter', () => {
       const video = document.createElement('video') as VideoElement;
       oldTweet.appendChild(video);
       document.body.appendChild(oldTweet);
-      
+
       const foundContainer = adapter.findVideoContainer(video);
       expect(foundContainer).toBe(oldTweet);
     });
@@ -127,7 +127,7 @@ describe('TwitterAdapter', () => {
   describe('Metadata Extraction', () => {
     it('should extract post metadata', () => {
       const metadata = adapter.extractPostMetadata(container);
-      
+
       expect(metadata.username).toBe('testuser');
       expect(metadata.postId).toBe('123456789');
       expect(metadata.description).toContain('Test tweet with #video');
@@ -138,7 +138,7 @@ describe('TwitterAdapter', () => {
     it('should handle missing metadata gracefully', () => {
       const emptyContainer = document.createElement('article');
       const metadata = adapter.extractPostMetadata(emptyContainer);
-      
+
       expect(metadata.username).toBe('unknown');
       expect(metadata.postId).toBe('');
       expect(metadata.description).toBeUndefined();
@@ -148,7 +148,7 @@ describe('TwitterAdapter', () => {
   describe('Video Data Extraction', () => {
     it('should extract direct video URL', async () => {
       const result = await adapter.extractVideoData(mockVideo);
-      
+
       expect(result.url).toBe('https://video.twimg.com/test.mp4');
       expect(result.type).toBe('direct');
     });
@@ -158,18 +158,18 @@ describe('TwitterAdapter', () => {
       const source = document.createElement('source');
       source.src = 'https://video.twimg.com/source.mp4';
       mockVideo.appendChild(source);
-      
+
       const result = await adapter.extractVideoData(mockVideo);
-      
+
       expect(result.url).toBe('https://video.twimg.com/source.mp4');
       expect(result.type).toBe('direct');
     });
 
     it('should handle blob URLs', async () => {
       mockVideo.src = 'blob:https://twitter.com/abc123';
-      
+
       const result = await adapter.extractVideoData(mockVideo);
-      
+
       // m3u8 extraction not yet implemented
       expect(result.url).toBeNull();
       expect(result.type).toBe('direct');
@@ -180,9 +180,9 @@ describe('TwitterAdapter', () => {
       Object.defineProperty(mockVideo, 'duration', { value: 120, writable: true });
       Object.defineProperty(mockVideo, 'videoWidth', { value: 1280, writable: true });
       Object.defineProperty(mockVideo, 'videoHeight', { value: 720, writable: true });
-      
+
       const result = await adapter.extractVideoData(mockVideo);
-      
+
       expect(result.metadata?.duration).toBe(120);
       expect(result.metadata?.width).toBe(1280);
       expect(result.metadata?.height).toBe(720);
@@ -192,7 +192,7 @@ describe('TwitterAdapter', () => {
   describe('Button Injection', () => {
     it('should find button injection point in action bar', () => {
       const injectionPoint = adapter.getButtonInjectionPoint(container);
-      
+
       expect(injectionPoint).toBeTruthy();
       expect(injectionPoint?.getAttribute('role')).toBe('group');
     });
@@ -200,7 +200,7 @@ describe('TwitterAdapter', () => {
     it('should fallback to container if no action bar', () => {
       const simpleContainer = document.createElement('article');
       const injectionPoint = adapter.getButtonInjectionPoint(simpleContainer);
-      
+
       expect(injectionPoint).toBe(simpleContainer);
     });
   });
@@ -210,10 +210,10 @@ describe('TwitterAdapter', () => {
       const reactRoot = document.createElement('div');
       reactRoot.id = 'react-root';
       document.body.appendChild(reactRoot);
-      
+
       const newAdapter = new TwitterAdapter();
       newAdapter.handleUIVariations();
-      
+
       // Check that selectors are set for React UI
       const selector = newAdapter.getVideoSelector();
       expect(selector).toContain('data-testid');
@@ -224,10 +224,10 @@ describe('TwitterAdapter', () => {
       const oldTweet = document.createElement('div');
       oldTweet.className = 'js-original-tweet';
       document.body.appendChild(oldTweet);
-      
+
       const newAdapter = new TwitterAdapter();
       newAdapter.handleUIVariations();
-      
+
       // Check that selectors are updated for old UI
       const selector = newAdapter.getContainerSelector();
       expect(selector).toContain('js-tweet');
@@ -237,7 +237,7 @@ describe('TwitterAdapter', () => {
   describe('Platform Features', () => {
     it('should report correct features', () => {
       const features = adapter.getFeatures();
-      
+
       expect(features.hasM3U8).toBe(true);
       expect(features.hasDASH).toBe(false);
       expect(features.hasDirectVideo).toBe(true);
@@ -257,10 +257,10 @@ describe('TwitterAdapter', () => {
     it('should clean up resources', () => {
       // Cache an m3u8 URL
       adapter.cacheM3U8Url('test-video', 'https://test.m3u8');
-      
+
       // Clean up
       adapter.cleanup();
-      
+
       // Verify cache is cleared (would need to expose cache for testing)
       // For now, just verify cleanup doesn't throw
       expect(() => adapter.cleanup()).not.toThrow();
@@ -270,7 +270,7 @@ describe('TwitterAdapter', () => {
   describe('Request Headers', () => {
     it('should provide Twitter-specific headers', () => {
       const headers = adapter.getRequestHeaders();
-      
+
       expect(headers['x-twitter-active-user']).toBe('yes');
       expect(headers['x-twitter-client-language']).toBe('en');
     });

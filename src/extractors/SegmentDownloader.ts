@@ -255,7 +255,11 @@ export class SegmentDownloader {
       // Parse segment duration
       if (line.startsWith('#EXTINF:')) {
         const durationMatch = line.match(/#EXTINF:([\d.]+)/);
-        if (durationMatch?.[1] !== null && durationMatch[1] !== undefined && durationMatch[1] !== '') {
+        if (
+          durationMatch?.[1] !== null &&
+          durationMatch[1] !== undefined &&
+          durationMatch[1] !== ''
+        ) {
           currentDuration = parseFloat(durationMatch[1]);
         }
       }
@@ -264,7 +268,12 @@ export class SegmentDownloader {
         let segmentUrl = line;
 
         // Resolve relative URLs
-        if (baseUrl !== null && baseUrl !== undefined && baseUrl !== '' && !segmentUrl.startsWith('http')) {
+        if (
+          baseUrl !== null &&
+          baseUrl !== undefined &&
+          baseUrl !== '' &&
+          !segmentUrl.startsWith('http')
+        ) {
           if (segmentUrl.startsWith('/')) {
             // Absolute path
             const urlObj = new URL(baseUrl);

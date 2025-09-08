@@ -33,9 +33,11 @@ export class ButtonInjector {
     this.showTextOnMobile = options.showTextOnMobile || false;
     this.injectedButtons = new Map();
     this.clickHandlers = new Map();
-    
+
     // Default download icon SVG
-    this.iconSvg = options.iconSvg || `
+    this.iconSvg =
+      options.iconSvg ||
+      `
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
         <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
       </svg>
@@ -61,7 +63,7 @@ export class ButtonInjector {
 
     // Create button
     const button = this.createButton(video);
-    
+
     // Position and inject button
     const positioned = this.positionButton(button, container, video);
     if (!positioned) {
@@ -75,13 +77,13 @@ export class ButtonInjector {
       element: button,
       videoId: video.id,
       container,
-      platform: this.platform
+      platform: this.platform,
     };
 
     this.injectedButtons.set(video.id, injectedButton);
-    
+
     // Add click handler
-    button.addEventListener('click', (event) => {
+    button.addEventListener('click', event => {
       event.preventDefault();
       event.stopPropagation();
       this.handleButtonClick(video, button);
@@ -100,7 +102,7 @@ export class ButtonInjector {
     button.setAttribute('data-video-id', video.id);
     button.setAttribute('data-tooltip', this.buttonText);
     button.setAttribute('aria-label', `Download video`);
-    
+
     // Add icon and text
     button.innerHTML = `
       ${this.iconSvg}
@@ -123,7 +125,11 @@ export class ButtonInjector {
   /**
    * Positions the button within the container based on platform
    */
-  positionButton(button: HTMLButtonElement, container: HTMLElement, _video: DetectedVideo): boolean {
+  positionButton(
+    button: HTMLButtonElement,
+    container: HTMLElement,
+    _video: DetectedVideo
+  ): boolean {
     try {
       switch (this.platform) {
         case 'twitter':
@@ -158,7 +164,7 @@ export class ButtonInjector {
       actionGroup.appendChild(button);
       return true;
     }
-    
+
     // Fallback: append to container
     container.appendChild(button);
     return true;
@@ -174,7 +180,7 @@ export class ButtonInjector {
       '[class*="PostFooter"]',
       '[class*="controls"]',
       '._3-miAEojrCvx_4FQ8x3P-s', // Old Reddit
-      '._1HL2jtLdJY4dp6E6mTr7kL' // New Reddit
+      '._1HL2jtLdJY4dp6E6mTr7kL', // New Reddit
     ];
 
     for (const selector of buttonContainers) {
@@ -196,12 +202,7 @@ export class ButtonInjector {
    */
   private positionGenericButton(button: HTMLButtonElement, container: HTMLElement): boolean {
     // Try to find a logical place for the button
-    const possibleContainers = [
-      '.video-controls',
-      '.media-controls',
-      '.actions',
-      '.toolbar'
-    ];
+    const possibleContainers = ['.video-controls', '.media-controls', '.actions', '.toolbar'];
 
     for (const selector of possibleContainers) {
       const targetContainer = container.querySelector(selector);
@@ -249,7 +250,10 @@ export class ButtonInjector {
   /**
    * Registers a click handler for a specific video
    */
-  onButtonClick(videoId: string, handler: (video: DetectedVideo, button: HTMLButtonElement) => void): void {
+  onButtonClick(
+    videoId: string,
+    handler: (video: DetectedVideo, button: HTMLButtonElement) => void
+  ): void {
     this.clickHandlers.set(videoId, handler);
   }
 
@@ -263,15 +267,19 @@ export class ButtonInjector {
   /**
    * Updates button state (loading, success, error)
    */
-  updateButtonState(videoId: string, state: 'idle' | 'loading' | 'success' | 'error', text?: string): void {
+  updateButtonState(
+    videoId: string,
+    state: 'idle' | 'loading' | 'success' | 'error',
+    text?: string
+  ): void {
     const injectedButton = this.injectedButtons.get(videoId);
     if (!injectedButton) return;
 
     const button = injectedButton.element;
-    
+
     // Remove all state classes
     button.classList.remove('loading', 'success', 'error');
-    
+
     // Add new state class
     if (state !== 'idle') {
       button.classList.add(state);
@@ -309,7 +317,7 @@ export class ButtonInjector {
    * Removes all injected buttons
    */
   removeAllButtons(): void {
-    this.injectedButtons.forEach((button) => {
+    this.injectedButtons.forEach(button => {
       button.element.remove();
     });
     this.injectedButtons.clear();
@@ -341,7 +349,7 @@ export class ButtonInjector {
       document.body.classList.contains('theme-dark'),
       document.body.dataset['theme'] === 'dark',
       document.documentElement.dataset['theme'] === 'dark',
-      window.matchMedia('(prefers-color-scheme: dark)').matches
+      window.matchMedia('(prefers-color-scheme: dark)').matches,
     ];
 
     return darkModeIndicators.some(indicator => indicator);
@@ -352,7 +360,7 @@ export class ButtonInjector {
    */
   updateTheme(): void {
     const isDark = this.isDarkMode();
-    this.injectedButtons.forEach((button) => {
+    this.injectedButtons.forEach(button => {
       if (isDark) {
         button.element.classList.add('dark-mode');
       } else {
@@ -367,10 +375,11 @@ export class ButtonInjector {
   setIcon(iconSvg: string): void {
     this.iconSvg = iconSvg;
     // Update existing buttons
-    this.injectedButtons.forEach((button) => {
+    this.injectedButtons.forEach(button => {
       const iconElement = button.element.querySelector('svg');
       if (iconElement && iconElement.parentElement) {
-        iconElement.parentElement.innerHTML = iconSvg + button.element.querySelector('span')?.outerHTML;
+        iconElement.parentElement.innerHTML =
+          iconSvg + button.element.querySelector('span')?.outerHTML;
       }
     });
   }
@@ -381,7 +390,7 @@ export class ButtonInjector {
   setText(text: string): void {
     this.buttonText = text;
     // Update existing buttons
-    this.injectedButtons.forEach((button) => {
+    this.injectedButtons.forEach(button => {
       const textElement = button.element.querySelector('span');
       if (textElement) {
         textElement.textContent = text;

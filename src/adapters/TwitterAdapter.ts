@@ -3,7 +3,12 @@
  * Platform adapter for Twitter/X video handling
  */
 
-import { PlatformAdapter, VideoExtractionResult, PostMetadata, PlatformConfig } from './PlatformAdapter';
+import {
+  PlatformAdapter,
+  VideoExtractionResult,
+  PostMetadata,
+  PlatformConfig,
+} from './PlatformAdapter';
 import type { VideoElement } from '../types';
 
 const TWITTER_CONFIG: PlatformConfig = {
@@ -14,15 +19,15 @@ const TWITTER_CONFIG: PlatformConfig = {
     container: 'article, div[data-testid="tweet"]',
     actionBar: '[role="group"]',
     username: '[dir="ltr"] span, [data-testid="User-Name"] span',
-    postId: 'a[href*="/status/"]'
+    postId: 'a[href*="/status/"]',
   },
   features: {
     hasM3U8: true,
     hasDASH: false,
     hasDirectVideo: true,
     requiresAuth: false,
-    supportsQuality: true
-  }
+    supportsQuality: true,
+  },
 };
 
 export class TwitterAdapter extends PlatformAdapter {
@@ -42,7 +47,7 @@ export class TwitterAdapter extends PlatformAdapter {
     if (document.querySelector('#react-root')) {
       this.uiVersion = 'react';
       this.log('Detected React-based Twitter/X UI');
-    } 
+    }
     // Check for old Twitter (pre-2019)
     else if (document.querySelector('.js-original-tweet')) {
       this.uiVersion = 'old';
@@ -116,13 +121,13 @@ export class TwitterAdapter extends PlatformAdapter {
   private isGifVideo(container: Element): boolean {
     // Check for GIF label
     const hasGifLabel = container.querySelector('[aria-label*="GIF"]') !== null;
-    
+
     // Check for GIF in alt text
     const hasGifAlt = container.querySelector('img[alt*="GIF"]') !== null;
-    
+
     // Check for GIF badge
     const hasGifBadge = container.querySelector('[data-testid="gif-badge"]') !== null;
-    
+
     return hasGifLabel || hasGifAlt || hasGifBadge;
   }
 
@@ -131,7 +136,7 @@ export class TwitterAdapter extends PlatformAdapter {
    */
   private isExternalEmbed(video: VideoElement): boolean {
     const src = video.src || video.currentSrc;
-    
+
     const externalDomains = [
       'youtube.com',
       'youtu.be',
@@ -139,7 +144,7 @@ export class TwitterAdapter extends PlatformAdapter {
       'dailymotion.com',
       'twitch.tv',
       'facebook.com',
-      'instagram.com'
+      'instagram.com',
     ];
 
     return externalDomains.some(domain => src.includes(domain));
@@ -151,10 +156,10 @@ export class TwitterAdapter extends PlatformAdapter {
   private isAdvertisement(container: Element): boolean {
     // Check for promoted label
     const hasPromotedLabel = container.querySelector('[data-testid="promotedLabel"]') !== null;
-    
+
     // Check for ad disclosure
     const hasAdDisclosure = container.textContent?.includes('Promoted') || false;
-    
+
     return hasPromotedLabel || hasAdDisclosure;
   }
 
@@ -168,7 +173,7 @@ export class TwitterAdapter extends PlatformAdapter {
       return {
         url: directUrl,
         type: 'direct',
-        metadata: this.extractBasicMetadata(element)
+        metadata: this.extractBasicMetadata(element),
       };
     }
 
@@ -181,7 +186,7 @@ export class TwitterAdapter extends PlatformAdapter {
           url: m3u8Url,
           type: 'm3u8',
           qualities: await this.extractQualitiesFromM3U8(m3u8Url),
-          metadata: this.extractBasicMetadata(element)
+          metadata: this.extractBasicMetadata(element),
         };
       }
     }
@@ -193,14 +198,14 @@ export class TwitterAdapter extends PlatformAdapter {
         url: interceptedUrl,
         type: 'm3u8',
         qualities: await this.extractQualitiesFromM3U8(interceptedUrl),
-        metadata: this.extractBasicMetadata(element)
+        metadata: this.extractBasicMetadata(element),
       };
     }
 
     return {
       url: null,
       type: 'direct',
-      metadata: this.extractBasicMetadata(element)
+      metadata: this.extractBasicMetadata(element),
     };
   }
 
@@ -286,7 +291,7 @@ export class TwitterAdapter extends PlatformAdapter {
     const metadata: PostMetadata = {
       username: 'unknown',
       postId: '',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     // Extract username
@@ -313,12 +318,12 @@ export class TwitterAdapter extends PlatformAdapter {
     const tweetText = container.querySelector('[data-testid="tweetText"], .tweet-text');
     if (tweetText) {
       metadata.description = tweetText.textContent || undefined;
-      
+
       // Extract hashtags
       const hashtags = Array.from(tweetText.querySelectorAll('a[href*="/hashtag/"]'))
         .map(tag => tag.textContent?.replace('#', '').trim())
         .filter(Boolean) as string[];
-      
+
       if (hashtags.length > 0) {
         metadata.hashtags = hashtags;
       }
@@ -381,7 +386,7 @@ export class TwitterAdapter extends PlatformAdapter {
     this.config.selectors.container = '.tweet, .js-tweet, .js-stream-tweet';
     this.config.selectors.actionBar = '.tweet-actions, .js-actions';
     this.config.selectors.username = '.username, .js-username';
-    
+
     this.log('Configured for old Twitter UI');
   }
 
@@ -401,7 +406,7 @@ export class TwitterAdapter extends PlatformAdapter {
     this.config.selectors.video = 'video, div[data-testid="videoPlayer"] video';
     this.config.selectors.container = 'article, div[data-testid="tweet"]';
     this.config.selectors.actionBar = '[role="group"]';
-    
+
     this.log('Configured for React Twitter/X UI');
   }
 
@@ -425,7 +430,7 @@ export class TwitterAdapter extends PlatformAdapter {
   override getRequestHeaders(): Record<string, string> {
     return {
       'x-twitter-active-user': 'yes',
-      'x-twitter-client-language': 'en'
+      'x-twitter-client-language': 'en',
     };
   }
 }

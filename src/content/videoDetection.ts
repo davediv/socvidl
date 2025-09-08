@@ -11,7 +11,7 @@ import type { DetectedVideo, Platform } from '../types';
  */
 export function initializeVideoDetection(): VideoDetector | null {
   const platform = detectPlatform();
-  
+
   if (!platform) {
     console.warn('[SocviDL] Unsupported platform');
     return null;
@@ -52,15 +52,15 @@ export function initializeVideoDetection(): VideoDetector | null {
  */
 export function detectPlatform(): Platform {
   const hostname = window.location.hostname;
-  
+
   if (hostname.includes('twitter.com') || hostname.includes('x.com')) {
     return 'twitter';
   }
-  
+
   if (hostname.includes('reddit.com')) {
     return 'reddit';
   }
-  
+
   return null;
 }
 
@@ -134,12 +134,11 @@ function injectDownloadButton(video: DetectedVideo): void {
 
   // Try to position the marker relative to the video
   if (!video.container) return;
-  
-  if (video.container.style.position === '' || 
-      video.container.style.position === 'static') {
+
+  if (video.container.style.position === '' || video.container.style.position === 'static') {
     video.container.style.position = 'relative';
   }
-  
+
   video.container.appendChild(marker);
 
   // Remove marker after 3 seconds
@@ -159,8 +158,9 @@ export function getVideoInfo(video: DetectedVideo): VideoInfo {
 
   if (platform === 'twitter') {
     const tweet = video.container;
-    username = tweet?.querySelector('[dir="ltr"] span')?.textContent?.replace('@', '') || 'twitter_user';
-    
+    username =
+      tweet?.querySelector('[dir="ltr"] span')?.textContent?.replace('@', '') || 'twitter_user';
+
     // Try to extract post ID from URL or data attributes
     const link = tweet?.querySelector('a[href*="/status/"]') as HTMLAnchorElement;
     if (link) {
@@ -169,11 +169,12 @@ export function getVideoInfo(video: DetectedVideo): VideoInfo {
     }
   } else if (platform === 'reddit') {
     const post = video.container;
-    username = post?.querySelector('[data-author], [class*="author"]')?.textContent || 'reddit_user';
-    
+    username =
+      post?.querySelector('[data-author], [class*="author"]')?.textContent || 'reddit_user';
+
     // Try to extract post ID
-    const postIdAttr = post?.getAttribute('data-post-id') || 
-                       post?.getAttribute('id')?.replace('post-', '') || '';
+    const postIdAttr =
+      post?.getAttribute('data-post-id') || post?.getAttribute('id')?.replace('post-', '') || '';
     postId = postIdAttr;
   }
 

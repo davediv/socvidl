@@ -36,7 +36,7 @@ export class DownloadManager {
   private static instance: DownloadManager;
   private defaultTemplate = '{platform}_{username}_{timestamp}';
   private readonly maxFilenameLength = 255;
-  private readonly forbiddenChars = /[<>:"/\\|?*\x00-\x1F]/g;
+  private readonly forbiddenChars = /[<>:"/\\|?*\u0000-\u001F]/g;
   private readonly reservedNames = [
     'CON',
     'PRN',
@@ -62,13 +62,15 @@ export class DownloadManager {
     'LPT9',
   ];
 
-  private constructor() {}
+  private constructor() {
+    // Private constructor for singleton pattern
+  }
 
   /**
    * Get singleton instance of DownloadManager
    */
   static getInstance(): DownloadManager {
-    if (!DownloadManager.instance) {
+    if (DownloadManager.instance === undefined) {
       DownloadManager.instance = new DownloadManager();
     }
     return DownloadManager.instance;
@@ -80,15 +82,15 @@ export class DownloadManager {
   async initiateDownload(options: DownloadOptions): Promise<DownloadResult> {
     try {
       // Validate Chrome API availability
-      if (!chrome?.downloads) {
+      if (chrome?.downloads === undefined) {
         throw new Error('Chrome Downloads API not available');
       }
 
       // Generate filename if not provided
-      const filename = options.filename || this.generateFilename(options);
+      const filename = options.filename ?? this.generateFilename(options);
 
       // Validate filename
-      if (!this.isValidFilename(filename)) {
+      if (filename.length === 0 || !this.isValidFilename(filename)) {
         throw new Error('Invalid filename generated');
       }
 
@@ -102,7 +104,7 @@ export class DownloadManager {
         setTimeout(() => {
           URL.revokeObjectURL(downloadUrl);
         }, 60000); // Clean up after 1 minute
-      } else if (options.url) {
+      } else if (options.url !== undefined && options.url.length > 0) {
         downloadUrl = options.url;
       } else {
         throw new Error('No URL or blob provided for download');
@@ -165,7 +167,7 @@ export class DownloadManager {
     // Replace template variables
     let filename = template;
     Object.entries(templateVars).forEach(([key, value]) => {
-      filename = filename.replace(`{${key}}`, value);
+      filename = filename.replace(`{${key}}`, String(value));
     });
 
     // Remove any remaining empty template variables
@@ -206,7 +208,7 @@ export class DownloadManager {
 
     // Check for reserved names (Windows)
     const nameWithoutExt = sanitized.split('.')[0]?.toUpperCase();
-    if (nameWithoutExt && this.reservedNames.includes(nameWithoutExt)) {
+    if (nameWithoutExt !== undefined && this.reservedNames.includes(nameWithoutExt)) {
       sanitized = '_' + sanitized;
     }
 
@@ -234,7 +236,7 @@ export class DownloadManager {
 
     // Check for reserved names
     const nameWithoutExt = filename.split('.')[0]?.toUpperCase();
-    if (nameWithoutExt && this.reservedNames.includes(nameWithoutExt)) return false;
+    if (nameWithoutExt !== undefined && this.reservedNames.includes(nameWithoutExt)) return false;
 
     // Check for problematic patterns
     if (filename.startsWith('.')) return false;
@@ -284,7 +286,7 @@ export class DownloadManager {
               resolve();
               break;
             case 'interrupted':
-              reject(new Error(`Download interrupted: ${download.error || 'Unknown error'}`));
+              reject(new Error(`Download interrupted: ${download.error ?? 'Unknown error'}`));
               break;
             case 'in_progress':
               // Continue monitoring
@@ -319,7 +321,7 @@ export class DownloadManager {
   /**
    * Cancels an ongoing download
    */
-  async cancelDownload(downloadId: number): Promise<boolean> {
+  cancelDownload(downloadId: number): Promise<boolean> {
     return new Promise(resolve => {
       chrome.downloads.cancel(downloadId, () => {
         resolve(!chrome.runtime.lastError);
@@ -330,7 +332,7 @@ export class DownloadManager {
   /**
    * Pauses a download
    */
-  async pauseDownload(downloadId: number): Promise<boolean> {
+  pauseDownload(downloadId: number): Promise<boolean> {
     return new Promise(resolve => {
       chrome.downloads.pause(downloadId, () => {
         resolve(!chrome.runtime.lastError);
@@ -341,7 +343,7 @@ export class DownloadManager {
   /**
    * Resumes a paused download
    */
-  async resumeDownload(downloadId: number): Promise<boolean> {
+  resumeDownload(downloadId: number): Promise<boolean> {
     return new Promise(resolve => {
       chrome.downloads.resume(downloadId, () => {
         resolve(!chrome.runtime.lastError);
@@ -352,7 +354,7 @@ export class DownloadManager {
   /**
    * Gets download history
    */
-  async getDownloadHistory(limit = 100): Promise<chrome.downloads.DownloadItem[]> {
+  getDownloadHistory(limit = 100): Promise<chrome.downloads.DownloadItem[]> {
     return new Promise(resolve => {
       chrome.downloads.search(
         {
@@ -360,7 +362,7 @@ export class DownloadManager {
           orderBy: ['-startTime'],
         },
         downloads => {
-          resolve(downloads || []);
+          resolve(downloads ?? []);
         }
       );
     });
@@ -369,7 +371,7 @@ export class DownloadManager {
   /**
    * Clears completed downloads from history
    */
-  async clearDownloadHistory(): Promise<void> {
+  clearDownloadHistory(): Promise<void> {
     return new Promise(resolve => {
       chrome.downloads.erase({}, () => {
         resolve();

@@ -53,7 +53,7 @@ export class PlatformDetector {
     }
 
     const platform = this.detectPlatform();
-    
+
     switch (platform) {
       case 'twitter':
       case 'x':

@@ -16,7 +16,7 @@ const mockChrome = {
 };
 
 // Set up global chrome mock
-(global as any).chrome = mockChrome;
+(global as any).chrome = mockChrome; // eslint-disable-line @typescript-eslint/no-explicit-any
 global.URL.createObjectURL = jest.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = jest.fn();
 

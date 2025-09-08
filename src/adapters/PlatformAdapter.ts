@@ -64,8 +64,8 @@ export abstract class PlatformAdapter {
    * Check if current domain matches this platform
    */
   matchesDomain(hostname: string): boolean {
-    return this.config.domains.some(domain => 
-      hostname.includes(domain) || hostname.endsWith(domain)
+    return this.config.domains.some(
+      domain => hostname.includes(domain) || hostname.endsWith(domain)
     );
   }
 
@@ -157,7 +157,7 @@ export abstract class PlatformAdapter {
       height: video.videoHeight || null,
       poster: video.poster || null,
       isLive: video.duration === Infinity,
-      hasAudio: this.checkHasAudio(video)
+      hasAudio: this.checkHasAudio(video),
     };
   }
 
@@ -169,7 +169,7 @@ export abstract class PlatformAdapter {
     if ('audioTracks' in video) {
       return (video as any).audioTracks?.length > 0;
     }
-    
+
     // Check if muted attribute is set
     if (video.hasAttribute('muted')) {
       return false;
@@ -184,7 +184,7 @@ export abstract class PlatformAdapter {
    */
   protected log(message: string, level: 'info' | 'warn' | 'error' = 'info'): void {
     if (!this.enableLogging) return;
-    
+
     const prefix = `[SocviDL:${this.config.name}]`;
     switch (level) {
       case 'error':
